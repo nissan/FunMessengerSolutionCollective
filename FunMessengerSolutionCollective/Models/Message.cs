@@ -23,6 +23,9 @@
         [JsonProperty(PropertyName = "body")]
         public string Body { get; set; }
 
+        [JsonProperty(PropertyName = "dateTimeStamp")]
+        public string DateTimeStamp { get; set; }
+
         [JsonProperty(PropertyName = "isDeleted")]
         public bool Deleted { get; set; }
     }

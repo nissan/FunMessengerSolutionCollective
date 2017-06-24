@@ -37,15 +37,15 @@
 
     <!-- Your custom script here -->
     <script type="text/babel">
-        const getMessage = () => "ReactJS working check successful";
+        const getMessage = () => "ReactJS working: check successful";
         document.getElementById('output').innerHTML = getMessage();
+
     </script>
 
-    <script src="https://unpkg.com/react@latest/dist/react.js"></script>
-    <script src="https://unpkg.com/react-dom@latest/dist/react-dom.js"></script>
+    <script src="https://unpkg.com/react@15/dist/react.min.js"></script>
+    <script src="https://unpkg.com/react-dom@15/dist/react-dom.min.js"></script>
     <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
     <script type="text/babel">
-
         var PageHeader = React.createClass({
         render: function() {
         return (
@@ -81,18 +81,19 @@
         });
 
         var PageMessage = React.createClass({
+
         render: function() {
         return (
         <div className="row panel panel-success">
             <div className="col-md-2">
                 <div className="panel panel-body">
-                    <img src="https://pbs.twimg.com/profile_images/340937461/nissan.jpg" className="img-circle" height="100" width="100" alt="Nissan Dookeran" />
+                    <img src={this.props.senderImageUrl} className="img-circle" height="100" width="100" alt="Nissan Dookeran" />
                 </div>
             </div>
             <div className="col-md-10">
-                <div className="panel panel-title">Nissan Dookeran</div>
-                <div className="panel panel-body">Hello world</div>
-                <div className="panel panel-footer">Sent at 1:03pm</div>
+                <div className="panel panel-title">{this.props.senderName} Subject: {this.props.title}</div>
+                <div className="panel panel-body">{this.props.body}</div>
+                <div className="panel panel-footer">Sent at {this.props.dateTimeStamp}</div>
             </div>
         </div>
         );
@@ -100,11 +101,29 @@
         });
 
         var PageMessageList = React.createClass({
+        getInitialState: function() {
+        return {data: 
+        [{"id":"1","threadId":null,"senderName":"Nissan Dookeran","senderImageUrl":"https://pbs.twimg.com/profile_images/340937461/nissan.jpg","title":"Hi","body":"Hello world!","dateTimeStamp":"06/24/2017 20:17:03","isDeleted":false},{"id":"2","threadId":null,"senderName":"Captain Hook","senderImageUrl":"https://sup3rjunior.files.wordpress.com/2013/03/captain-hook.jpg","title":"Arrrgh!","body":"Ay matey, where to now?","dateTimeStamp":"06/24/2017 20:47:03","isDeleted":false},{"id":"3","threadId":null,"senderName":"Peter Pan","senderImageUrl":"https://drakalogia.wikispaces.com/file/view/4c4b3ee3cf63c82d77e04860c699876854bc4b79.jpg/499776162/4c4b3ee3cf63c82d77e04860c699876854bc4b79.jpg","title":"Yo ho ho","body":"Second start to the left and straight on till morning","dateTimeStamp":"06/24/2017 22:17:03","isDeleted":false}]
+        };
+        },
+        componentDidMount: function() {
+        },
         render: function() {
+        var messageNodes = this.state.data.map(function(message){
+            return(
+                <PageMessage 
+                             messageId={message.id} 
+                             senderName={message.senderName} 
+                             senderImageUrl={message.senderImageUrl}
+                             title={message.title} 
+                             body ={message.body}
+                             dateTimeStamp ={message.dateTimeStamp}
+                             />
+            );
+        });
         return(
-        <div>
-            <PageMessage />
-            <PageMessage />
+        <div class="messageList">
+            {messageNodes}
         </div>
         )
         }
@@ -119,17 +138,21 @@
         }
         });
 
+        @*render the updated page header to let me know React rendering scripts loaded properly (they sometimes break with new NuGet updates)*@
         ReactDOM.render(
         <PageHeader />,document.getElementById('page-header')
         );
+        @*Shoutout to Solution Collective*@
         ReactDOM.render(
         <PageFooter />,document.getElementById('page-footer')
         );
+        @*render the widget to allow a new message to be sent*@
         ReactDOM.render(
         <PageForm />,document.getElementById('new-message-form')
         );
+        @*render the widget that shows all messages already sent*@
         ReactDOM.render(
-        <PageMessageList />,document.getElementById('display-messages-panel')
+        <PageMessageList url="/api/message" pollInterval={2000} />,document.getElementById('display-messages-panel')
         )
     </script>
 </body>

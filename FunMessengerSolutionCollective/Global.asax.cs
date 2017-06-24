@@ -18,7 +18,7 @@ namespace FunMessengerSolutionCollective
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
-
+            //Check for the database and collection existing, if not, create them
             MessageRepository<FunMessengerSolutionCollective.Models.Message>.Initialize();
         }
     }
