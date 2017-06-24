@@ -20,39 +20,19 @@
 </head>
 <body>
     <div id="container" class="container">
-        <div class="page-header"><h1><span class="label-info"> Initializing... </span></h1></div>
-        <div class="row panel panel-primary">
-            <div class="col-md-2">
-                <div class="panel panel-body">
-                    <img src="https://pbs.twimg.com/profile_images/340937461/nissan.jpg" class="img-circle" height="100" width="100" alt="Nissan Dookeran" />
-                </div>
-            </div>
-            <div class="col-md-10">
-                <div class="panel panel-title">Send a message</div>
-                <div class="panel panel-body">
-                    <form>
-                        <div class="form-group">
-                            <label for="message">Message:</label>
-                            <input type="text" class="form-control" id="message">
-                        </div>
-                        <button type="submit" class="btn btn-default">Submit</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <div class="row panel panel-success">
-            <div class="col-md-2">
-                <div class="panel panel-body">
-                    <img src="https://pbs.twimg.com/profile_images/340937461/nissan.jpg" class="img-circle" height="100" width="100" alt="Nissan Dookeran" />
-                </div>
-            </div>
-            <div class="col-md-10">
-                <div class="panel panel-title">Nissan Dookeran</div>
-                <div class="panel panel-body">Hello world</div>
-            </div>
+        <div id="page-header" class="page-header"><h1><span class="label-warning"> Offline </span></h1></div>
+        <div id="new-message-form">
+            
         </div>
 
+        <div id="display-messages-panel">
+            
+        </div>
+        
+        
+
     </div>
+    <div id="page-footer"></div>
     <div id="output"></div>
 
     <!-- Your custom script here -->
@@ -65,21 +45,92 @@
     <script src="https://unpkg.com/react-dom@latest/dist/react-dom.js"></script>
     <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
     <script type="text/babel">
-        var MessageContainer = React.createClass({
-        displayName: 'MessageContainer',
+
+        var PageHeader = React.createClass({
         render: function() {
         return (
-        @*<div className="page-header"><h1><span className="label-info"> Completed! </span></h1></div>*@
-        React.createElement('div', {className: "page-header"},
-        <h1><span className="label-info"> Completed! </span></h1>
-        )
+        <div className="page-header"><h1><span className="label-success"> Online </span></h1></div>
         );
         }
         });
-        ReactDOM.render(
-        React.createElement(MessageContainer, null),
-        document.getElementById('container')
+
+        var PageForm = React.createClass({
+        render: function() {
+        return (
+        <div className="row panel panel-primary">
+            <div className="col-md-2">
+                <div className="panel panel-body">
+                    <img src="https://pbs.twimg.com/profile_images/340937461/nissan.jpg" className="img-circle" height="100" width="100" alt="Nissan Dookeran" />
+                </div>
+            </div>
+            <div className="col-md-10">
+                <div class="panel panel-title">Send a message</div>
+                <div class="panel panel-body">
+                    <form>
+                        <div className="form-group">
+                            <label for="message">Message:</label>
+                            <input type="text" className="form-control" id="message" maxlength="140" />
+                        </div>
+                        <button type="submit" className="btn btn-default">Submit</button>
+                    </form>
+                </div>
+                </div>
+        </div>
         );
+        }
+        });
+
+        var PageMessage = React.createClass({
+        render: function() {
+        return (
+        <div className="row panel panel-success">
+            <div className="col-md-2">
+                <div className="panel panel-body">
+                    <img src="https://pbs.twimg.com/profile_images/340937461/nissan.jpg" className="img-circle" height="100" width="100" alt="Nissan Dookeran" />
+                </div>
+            </div>
+            <div className="col-md-10">
+                <div className="panel panel-title">Nissan Dookeran</div>
+                <div className="panel panel-body">Hello world</div>
+                <div className="panel panel-footer">Sent at 1:03pm</div>
+            </div>
+        </div>
+        );
+        }
+        });
+
+        var PageMessageList = React.createClass({
+        render: function() {
+        return(
+        <div>
+            <PageMessage />
+            <PageMessage />
+        </div>
+        )
+        }
+        });
+
+
+        var PageFooter = React.createClass({
+        render: function() {
+        return (
+        <div className="page-footer"><h1><span className="label-info"> Built for Solution Collective Interview </span></h1></div>
+        );
+        }
+        });
+
+        ReactDOM.render(
+        <PageHeader />,document.getElementById('page-header')
+        );
+        ReactDOM.render(
+        <PageFooter />,document.getElementById('page-footer')
+        );
+        ReactDOM.render(
+        <PageForm />,document.getElementById('new-message-form')
+        );
+        ReactDOM.render(
+        <PageMessageList />,document.getElementById('display-messages-panel')
+        )
     </script>
 </body>
 </html>
