@@ -103,10 +103,24 @@
         var PageMessageList = React.createClass({
         getInitialState: function() {
         return {data: 
-        [{"id":"1","threadId":null,"senderName":"Nissan Dookeran","senderImageUrl":"https://pbs.twimg.com/profile_images/340937461/nissan.jpg","title":"Hi","body":"Hello world!","dateTimeStamp":"06/24/2017 20:17:03","isDeleted":false},{"id":"2","threadId":null,"senderName":"Captain Hook","senderImageUrl":"https://sup3rjunior.files.wordpress.com/2013/03/captain-hook.jpg","title":"Arrrgh!","body":"Ay matey, where to now?","dateTimeStamp":"06/24/2017 20:47:03","isDeleted":false},{"id":"3","threadId":null,"senderName":"Peter Pan","senderImageUrl":"https://drakalogia.wikispaces.com/file/view/4c4b3ee3cf63c82d77e04860c699876854bc4b79.jpg/499776162/4c4b3ee3cf63c82d77e04860c699876854bc4b79.jpg","title":"Yo ho ho","body":"Second start to the left and straight on till morning","dateTimeStamp":"06/24/2017 22:17:03","isDeleted":false}]
+        @*[{"id":"1","threadId":null,"senderName":"Nissan Dookeran","senderImageUrl":"https://pbs.twimg.com/profile_images/340937461/nissan.jpg","title":"Hi","body":"Hello world!","dateTimeStamp":"06/24/2017 20:17:03","isDeleted":false},{"id":"2","threadId":null,"senderName":"Captain Hook","senderImageUrl":"https://sup3rjunior.files.wordpress.com/2013/03/captain-hook.jpg","title":"Arrrgh!","body":"Ay matey, where to now?","dateTimeStamp":"06/24/2017 20:47:03","isDeleted":false},{"id":"3","threadId":null,"senderName":"Peter Pan","senderImageUrl":"https://drakalogia.wikispaces.com/file/view/4c4b3ee3cf63c82d77e04860c699876854bc4b79.jpg/499776162/4c4b3ee3cf63c82d77e04860c699876854bc4b79.jpg","title":"Yo ho ho","body":"Second start to the left and straight on till morning","dateTimeStamp":"06/24/2017 22:17:03","isDeleted":false}]*@
+        []
         };
         },
+        loadMessagesFromServer: function() {
+        var xhr = new XMLHttpRequest();
+        xhr.open('get', this.props.url, true);
+        xhr.onload = function() {
+        var data = JSON.parse(xhr.responseText);
+        this.setState({ data: data });
+        }.bind(this);
+        xhr.send();
+        @*this.setState({ranFunction:"true"});*@
+        @*this.setState({rawData:xhr.responseText});*@
+        },
         componentDidMount: function() {
+        this.loadMessagesFromServer();
+        window.setInterval(this.loadMessagesFromServer, this.props.pollInterval);
         },
         render: function() {
         var messageNodes = this.state.data.map(function(message){
@@ -123,6 +137,8 @@
         });
         return(
         <div class="messageList">
+           
+            @*<h2>Raw data: {this.state.rawData} from {this.props.url}</h2>*@
             {messageNodes}
         </div>
         )
