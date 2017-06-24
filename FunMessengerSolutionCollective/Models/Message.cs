@@ -1,16 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace FunMessengerSolutionCollective.Models
+﻿namespace FunMessengerSolutionCollective.Models
 {
+    using Microsoft.Azure.Documents;
+    using Newtonsoft.Json;
+
     public class Message
     {
-        public int Id { get; set; }
-        public string Text { get; set; }
-        public string Sender { get; set; }
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; set; }
+
+        [JsonProperty(PropertyName = "threadId")]
+        public string ThreadId { get; set; }
+
+        [JsonProperty(PropertyName = "senderName")]
+        public string SenderName { get; set; }
+
+        [JsonProperty(PropertyName = "senderImageUrl")]
         public string SenderImageUrl { get; set; }
-        public DateTime DateTimeStamp { get; set; }
+
+        [JsonProperty(PropertyName = "title")]
+        public string Title { get; set; }
+
+        [JsonProperty(PropertyName = "body")]
+        public string Body { get; set; }
+
+        [JsonProperty(PropertyName = "isDeleted")]
+        public bool Deleted { get; set; }
     }
 }
