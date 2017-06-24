@@ -1,0 +1,85 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <title>Index</title>
+</head>
+<body>
+    <div id="container" class="container">
+        <div class="page-header"><h1><span class="label-info"> Initializing... </span></h1></div>
+        <div class="row panel panel-primary">
+            <div class="col-md-2">
+                <div class="panel panel-body">
+                    <img src="https://pbs.twimg.com/profile_images/340937461/nissan.jpg" class="img-circle" height="100" width="100" alt="Nissan Dookeran" />
+                </div>
+            </div>
+            <div class="col-md-10">
+                <div class="panel panel-title">Send a message</div>
+                <div class="panel panel-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="message">Message:</label>
+                            <input type="text" class="form-control" id="message">
+                        </div>
+                        <button type="submit" class="btn btn-default">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="row panel panel-success">
+            <div class="col-md-2">
+                <div class="panel panel-body">
+                    <img src="https://pbs.twimg.com/profile_images/340937461/nissan.jpg" class="img-circle" height="100" width="100" alt="Nissan Dookeran" />
+                </div>
+            </div>
+            <div class="col-md-10">
+                <div class="panel panel-title">Nissan Dookeran</div>
+                <div class="panel panel-body">Hello world</div>
+            </div>
+        </div>
+
+    </div>
+    <div id="output"></div>
+
+    <!-- Your custom script here -->
+    <script type="text/babel">
+        const getMessage = () => "ReactJS working check successful";
+        document.getElementById('output').innerHTML = getMessage();
+    </script>
+
+    <script src="https://unpkg.com/react@latest/dist/react.js"></script>
+    <script src="https://unpkg.com/react-dom@latest/dist/react-dom.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+    <script type="text/babel">
+        var MessageContainer = React.createClass({
+        displayName: 'MessageContainer',
+        render: function() {
+        return (
+        @*<div className="page-header"><h1><span className="label-info"> Completed! </span></h1></div>*@
+        React.createElement('div', {className: "page-header"},
+        <h1><span className="label-info"> Completed! </span></h1>
+        )
+        );
+        }
+        });
+        ReactDOM.render(
+        React.createElement(MessageContainer, null),
+        document.getElementById('container')
+        );
+    </script>
+</body>
+</html>
