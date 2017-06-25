@@ -11,7 +11,7 @@ namespace FunMessengerSolutionCollective.Controllers
     public class HomeController : Controller
     {
         // GET: Home
-        public async ActionResult Index()
+        public ActionResult Index()
         {
             //set the user until I write the part that lets me select a user
             var _message = new Message

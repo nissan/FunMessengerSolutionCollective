@@ -27,21 +27,22 @@
     <div id="container" class="container">
         <div id="page-header" class="page-header"><h1><span class="label-warning"> Offline </span></h1></div>
         <div id="new-message-form">
-            <div class="row panel panel-primary">
-                <div class="col-md-2">
-                    <div class="panel panel-body">
-                        <img src=@ViewBag.SenderImageUrl class="img-circle" height="100" width="100" alt=@ViewBag.SenderName />
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="row panel panel-primary">
+                    <div class="col-md-2">
+                        <div class="panel panel-body">
+                            <img src=@Model.SenderImageUrl class="img-circle" height="100" width="100" alt=@Model.SenderName />
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-10">
-                    <div class="panel panel-title">
-                        <h2>Send a new  message</h2>
-                    </div>
-                    <div class="panel panel-body">
-                        @using (Html.BeginForm())
-                        {
-                            @Html.AntiForgeryToken()
-                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="col-md-10">
+                        <div class="panel panel-title">
+                            <h2>Send a new  message</h2>
+                        </div>
+                        <div class="panel panel-body">
                             <div class="form-group">
                                 @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label" })
                                 @Html.EditorFor(model => model.Title, new { @id = "title", @maxlength = "140", @class = "form-control", @placeholder = "Enter title" })
@@ -59,12 +60,10 @@
                                 @Html.HiddenFor(model => model.SenderImageUrl)
                             </div>
                             <input type="submit" class="btn btn-default" value="Send" />
-
-                        }
-
+                        </div>
                     </div>
                 </div>
-            </div>
+            }
         </div>
         <div id="display-messages-panel">
 
