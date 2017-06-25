@@ -25,6 +25,7 @@
 </head>
 <body>
     <div id="container" class="container">
+
         <div id="page-header" class="page-header"><h1><span class="label label-warning"> Offline </span></h1></div>
         <div id="new-message-form">
             @using (Html.BeginForm())
@@ -97,8 +98,13 @@
         render: function() {
         return (
         <div>
-        <div className="page-header"><h1><span className="label label-success"> Online</span></h1></div>
-        <div><span class="label label-info">To change sender append "?user=0" "?user=1" "?user=2" to address </span></div>
+            <div className="page-header"><h1><span className="label label-success"> Online - Click Image to Change Sender</span></h1></div>
+            <div>
+                <a href="/"><img src="https://upload.wikimedia.org/wikipedia/commons/8/80/Anonymous.png" className="img-circle" height="100" width="100" /></a>
+                <a href="/?user=0"><img src="https://pbs.twimg.com/profile_images/340937461/nissan.jpg" className="img-circle" height="100" width="100" /></a>
+                <a href="/?user=1"><img src="https://sup3rjunior.files.wordpress.com/2013/03/captain-hook.jpg" className="img-circle" height="100" width="100" /></a>
+                <a href="/?user=2"><img src="https://drakalogia.wikispaces.com/file/view/4c4b3ee3cf63c82d77e04860c699876854bc4b79.jpg/499776162/4c4b3ee3cf63c82d77e04860c699876854bc4b79.jpg" className="img-circle" height="100" width="100" /></a>
+            </div>
         </div>
         );
         }
