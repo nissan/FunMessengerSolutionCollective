@@ -100,10 +100,10 @@
         <div>
             <div className="page-header"><h1><span className="label label-success"> Online - Click Image to Change Sender</span></h1></div>
             <div>
-                <a href="/"><img src="https://upload.wikimedia.org/wikipedia/commons/8/80/Anonymous.png" className="img-circle" height="100" width="100" /></a>
-                <a href="/?user=0"><img src="https://pbs.twimg.com/profile_images/340937461/nissan.jpg" className="img-circle" height="100" width="100" /></a>
-                <a href="/?user=1"><img src="https://sup3rjunior.files.wordpress.com/2013/03/captain-hook.jpg" className="img-circle" height="100" width="100" /></a>
-                <a href="/?user=2"><img src="https://drakalogia.wikispaces.com/file/view/4c4b3ee3cf63c82d77e04860c699876854bc4b79.jpg/499776162/4c4b3ee3cf63c82d77e04860c699876854bc4b79.jpg" className="img-circle" height="100" width="100" /></a>
+                <a href="/"><img src="/Images/Anonymous.png" className="img-circle" height="100" width="100" /></a>
+                <a href="/?user=0"><img src="/Images/nissan.jpg" className="img-circle" height="100" width="100" /></a>
+                <a href="/?user=1"><img src="/Images/captain-hook.jpg" className="img-circle" height="100" width="100" /></a>
+                <a href="/?user=2"><img src="/Images/peter-pan.jpg" className="img-circle" height="100" width="100" /></a>
             </div>
         </div>
         );
@@ -187,7 +187,7 @@
         <div className="row panel panel-success">
             <div className="col-md-2">
                 <div className="panel panel-body">
-                    <img src={this.props.senderImageUrl} className="img-circle" height="100" width="100" alt="Nissan Dookeran" />
+                    <img src={this.props.senderImageUrl} className="img-circle" height="100" width="100" alt={this.props.senderName} />
                 </div>
             </div>
             <div className="col-md-10">

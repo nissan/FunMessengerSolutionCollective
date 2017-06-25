@@ -142,6 +142,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
+    <Content Include="Images\Anonymous.png" />
+    <Content Include="Images\captain-hook.jpg" />
+    <Content Include="Images\nissan.jpg" />
+    <Content Include="Images\peter-pan.jpg" />
     <Content Include="Scripts\Messenger.jsx" />
     <Content Include="Web.config" />
   </ItemGroup>

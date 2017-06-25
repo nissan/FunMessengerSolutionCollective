@@ -22,7 +22,7 @@ namespace FunMessengerSolutionCollective.Controllers
                         Id = Guid.NewGuid().ToString(),
                         ThreadId = Guid.NewGuid().ToString(),
                         SenderName = "Anonymous",
-                        SenderImageUrl = "https://upload.wikimedia.org/wikipedia/commons/8/80/Anonymous.png"
+                        SenderImageUrl = "/Images/Anonymous.png"
                     };
                     break;
                 case 0:
@@ -31,7 +31,7 @@ namespace FunMessengerSolutionCollective.Controllers
                         Id = Guid.NewGuid().ToString(),
                         ThreadId = Guid.NewGuid().ToString(),
                         SenderName = "Nissan Dookeran",
-                        SenderImageUrl = "https://pbs.twimg.com/profile_images/340937461/nissan.jpg"
+                        SenderImageUrl = "/Images/nissan.jpg"
                     };
                     break;
                 case 1:
@@ -40,7 +40,7 @@ namespace FunMessengerSolutionCollective.Controllers
                         Id = Guid.NewGuid().ToString(),
                         ThreadId = Guid.NewGuid().ToString(),
                         SenderName = "Captain Hook",
-                        SenderImageUrl = "https://sup3rjunior.files.wordpress.com/2013/03/captain-hook.jpg"
+                        SenderImageUrl = "/Images/captain-hook.jpg"
                     };
                     break;
                 case 2:
@@ -49,7 +49,7 @@ namespace FunMessengerSolutionCollective.Controllers
                         Id = Guid.NewGuid().ToString(),
                         ThreadId = Guid.NewGuid().ToString(),
                         SenderName = "Peter Pan",
-                        SenderImageUrl = "https://drakalogia.wikispaces.com/file/view/4c4b3ee3cf63c82d77e04860c699876854bc4b79.jpg/499776162/4c4b3ee3cf63c82d77e04860c699876854bc4b79.jpg"
+                        SenderImageUrl = "/Images/peter-pan.jpg"
                     };
                     break;
             }

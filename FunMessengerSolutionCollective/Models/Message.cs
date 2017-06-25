@@ -22,7 +22,7 @@
 
         [JsonProperty(PropertyName = "title")]
         public string Title { get; set; }
-
+        [Required(ErrorMessage = "Body is required")]
         [JsonRequired]
         [JsonProperty(PropertyName = "body")]
         public string Body { get; set; }
