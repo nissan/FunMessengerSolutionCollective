@@ -8,6 +8,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
+    <!--TODO: Bundle these up and minify via BundleConfig.cs -->
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
@@ -16,20 +17,22 @@
 
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    
+    
     <title>Index</title>
 </head>
 <body>
     <div id="container" class="container">
         <div id="page-header" class="page-header"><h1><span class="label-warning"> Offline </span></h1></div>
         <div id="new-message-form">
-            
+
         </div>
 
         <div id="display-messages-panel">
-            
+
         </div>
-        
-        
+
+
 
     </div>
     <div id="page-footer"></div>
@@ -37,21 +40,21 @@
     <!--Use this block to test and verify ReactJS is setup properly-->
     <!--START-->
     @*
-    <div id="output"></div>
+        <div id="output"></div>
 
-    <!-- Your custom script here -->
-    <script type="text/babel">
-        const getMessage = () => "ReactJS working: check successful";
-        document.getElementById('output').innerHTML = getMessage();
+        <!-- Your custom script here -->
+        <script type="text/babel">
+            const getMessage = () => "ReactJS working: check successful";
+            document.getElementById('output').innerHTML = getMessage();
 
-    </script>
+        </script>
     *@
     <!--END-->
     <script src="https://unpkg.com/react@15/dist/react.min.js"></script>
     <script src="https://unpkg.com/react-dom@15/dist/react-dom.min.js"></script>
     <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
-   @* Not sure why referencing as follows doesn't work, maybe i need webpack to pre-compile jsx? Newbie problems, for now will embed script in page
-       <script src="@Url.Content("~/Scripts/Messenger.jsx")"></script>*@
+    @* Not sure why referencing as follows doesn't work, maybe i need webpack to pre-compile jsx? Newbie problems, for now will embed script in page
+        <script src="@Url.Content("~/Scripts/Messenger.jsx")"></script>*@
     <script type="text/babel">
         var PageHeader = React.createClass({
         render: function() {
@@ -62,21 +65,51 @@
         });
 
         var PageForm = React.createClass({
+        getInitialState: function(){
+        return {
+        title:'',
+        body:'',
+        senderName:"Nissan Dookeran",
+        senderImageUrl:"https://pbs.twimg.com/profile_images/340937461/nissan.jpg"
+        }
+        },
+        handleSenderChange: function(e){
+        this.setState({senderName: e.target.value});
+        },
+        handleTitleChange: function(e){
+        this.setState({title: e.target.value});
+        },
+        handleBodyChange: function(e){
+        this.setState({body: e.target.value});
+        },
+        handleSubmit: function(e){
+        e.preventDefault();
+        var senderName = this.state.senderName;
+        var senderImageUrl = this.state.senderImageUrl;
+        var title = this.state.title.trim();
+        var message = this.state.body.trim();
+        if (!message || !title) {return;}
+        @*TODO: point it to the POST API call for message*@
+        },
         render: function() {
         return (
         <div className="row panel panel-primary">
             <div className="col-md-2">
                 <div className="panel panel-body">
-                    <img src="https://pbs.twimg.com/profile_images/340937461/nissan.jpg" className="img-circle" height="100" width="100" alt="Nissan Dookeran" />
+                    <img src={this.state.senderImageUrl} className="img-circle" height="100" width="100" alt={this.state.senderName} />
                 </div>
             </div>
             <div className="col-md-10">
-                <div class="panel panel-title">Send a message</div>
+                <div class="panel panel-title">
+                    <h2>Send a new  message</h2>
+                </div>
                 <div class="panel panel-body">
-                    <form>
+                    <form onSubmit={this.handleSubmit}>
                         <div className="form-group">
+                            <label for="title">Subject:</label>
+                            <input type="text" className="form-control" id="title" maxlength="140" placeholder="Enter title" value={this.state.title} onChange={this.handleTitleChange} />
                             <label for="message">Message:</label>
-                            <input type="text" className="form-control" id="message" maxlength="140" />
+                            <textarea className="form-control" id="message" rows="10" cols="50" maxlength="1000" placeholder="Enter message" value={this.state.body} onChange={this.handleBodyChange}  ></textarea>
                         </div>
                         <button type="submit" className="btn btn-default">Submit</button>
                     </form>
@@ -87,8 +120,9 @@
         }
         });
 
-        var PageMessage = React.createClass({
 
+
+        var PageMessage = React.createClass({
         render: function() {
         return (
         <div className="row panel panel-success">
@@ -165,8 +199,8 @@
         );
         @*Shoutout to Solution Collective*@
         @*ReactDOM.render(
-        <PageFooter />,document.getElementById('page-footer')
-        );*@
+            <PageFooter />,document.getElementById('page-footer')
+            );*@
         @*render the widget to allow a new message to be sent*@
         ReactDOM.render(
         <PageForm />,document.getElementById('new-message-form')
