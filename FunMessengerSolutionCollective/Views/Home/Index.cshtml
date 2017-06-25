@@ -1,6 +1,8 @@
-﻿
+﻿@model FunMessengerSolutionCollective.Models.Message
+
 @{
     Layout = null;
+
 }
 
 <!DOCTYPE html>
@@ -17,25 +19,60 @@
 
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    
-    
+
+
     <title>Index</title>
 </head>
 <body>
     <div id="container" class="container">
         <div id="page-header" class="page-header"><h1><span class="label-warning"> Offline </span></h1></div>
         <div id="new-message-form">
+            <div class="row panel panel-primary">
+                <div class="col-md-2">
+                    <div class="panel panel-body">
+                        <img src=@ViewBag.SenderImageUrl class="img-circle" height="100" width="100" alt=@ViewBag.SenderName />
+                    </div>
+                </div>
+                <div class="col-md-10">
+                    <div class="panel panel-title">
+                        <h2>Send a new  message</h2>
+                    </div>
+                    <div class="panel panel-body">
+                        @using (Html.BeginForm())
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label" })
+                                @Html.EditorFor(model => model.Title, new { @id = "title", @maxlength = "140", @class = "form-control", @placeholder = "Enter title" })
+                                @Html.ValidationMessageFor(mode => Model.Title, "", new { @class = "text-danger", })
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Body, htmlAttributes: new { @class = "control-label" })
+                                @Html.TextAreaFor(model => model.Body, new { @id = "body", @maxlength = "1000", @class = "form-control", @placeholder = "Enter message" })
+                                @Html.ValidationMessageFor(mode => Model.Body, "", new { @class = "text-danger", })
+                            </div>
+                            <div style="display:none">
+                                @Html.HiddenFor(model => model.Id)
+                                @Html.HiddenFor(model => model.ThreadId)
+                                @Html.HiddenFor(model => model.SenderName)
+                                @Html.HiddenFor(model => model.SenderImageUrl)
+                            </div>
+                            <input type="submit" class="btn btn-default" value="Send" />
 
+                        }
+
+                    </div>
+                </div>
+            </div>
         </div>
-
         <div id="display-messages-panel">
 
         </div>
 
 
-
+        <div id="page-footer"></div>
     </div>
-    <div id="page-footer"></div>
 
     <!--Use this block to test and verify ReactJS is setup properly-->
     <!--START-->
@@ -50,6 +87,7 @@
         </script>
     *@
     <!--END-->
+
     <script src="https://unpkg.com/react@15/dist/react.min.js"></script>
     <script src="https://unpkg.com/react-dom@15/dist/react-dom.min.js"></script>
     <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
@@ -82,14 +120,27 @@
         handleBodyChange: function(e){
         this.setState({body: e.target.value});
         },
-        handleSubmit: function(e){
-        e.preventDefault();
-        var senderName = this.state.senderName;
-        var senderImageUrl = this.state.senderImageUrl;
-        var title = this.state.title.trim();
-        var message = this.state.body.trim();
+        handleSubmit: function(message){
+        message.preventDefault();
+        var data = new FormData();
+        data.Append(senderName,this.state.senderName);
+        data.Append(senderImageUrl,this.state.senderImageUrl);
+        data.Append(title,this.state.title.trim());
+        data.Append(body,this.state.body.trim());
         if (!message || !title) {return;}
         @*TODO: point it to the POST API call for message*@
+        @*var xhr = new XMLHttpRequest();
+            xhr.open('post', this.props.submitUrl, true);
+            xhr.onload = function() {
+            @*this.loadCommentsFromServer();
+            }.bind(this);
+            xhr.send(data);*@
+        var xhr = new XMLHttpRequest();
+        xhr.open('post', this.props.submitUrl, true);
+        xhr.onload = function() {
+        @*TODO: reload message list with updated message*@
+        }.bind(this);
+        xhr.send(data);
         },
         render: function() {
         return (
@@ -109,7 +160,7 @@
                             <label for="title">Subject:</label>
                             <input type="text" className="form-control" id="title" maxlength="140" placeholder="Enter title" value={this.state.title} onChange={this.handleTitleChange} />
                             <label for="message">Message:</label>
-                            <textarea className="form-control" id="message" rows="10" cols="50" maxlength="1000" placeholder="Enter message" value={this.state.body} onChange={this.handleBodyChange}  ></textarea>
+                            <textarea className="form-control" id="message" rows="10" cols="50" maxlength="1000" placeholder="Enter message" value={this.state.body} onChange={this.handleBodyChange}></textarea>
                         </div>
                         <button type="submit" className="btn btn-default">Submit</button>
                     </form>
@@ -202,9 +253,11 @@
             <PageFooter />,document.getElementById('page-footer')
             );*@
         @*render the widget to allow a new message to be sent*@
-        ReactDOM.render(
-        <PageForm />,document.getElementById('new-message-form')
-        );
+
+        @*Form submission isn't quite working, not sure why, newbie problems probably, defaulting to a form based input with ASP.Net MVC*@
+        @*ReactDOM.render(
+            <PageForm submitUrl="/api/message" />,document.getElementById('new-message-form')
+            );*@
         @*render the widget that shows all messages already sent*@
         ReactDOM.render(
         <PageMessageList url="/api/message" pollInterval={2000} />,document.getElementById('display-messages-panel')

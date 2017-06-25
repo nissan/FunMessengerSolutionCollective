@@ -11,6 +11,7 @@ using Microsoft.Azure.Documents.Linq;
 
 namespace FunMessengerSolutionCollective
 {
+    //Heavily referenced code from https://docs.microsoft.com/en-us/azure/cosmos-db/create-documentdb-dotnet
     public static class MessageRepository<T> where T : class
     {
         private static readonly string DatabaseId = ConfigurationManager.AppSettings["database"];
@@ -55,19 +56,19 @@ namespace FunMessengerSolutionCollective
             return results;
         }
 
-        public static async Task<Document> CreateItemAsync(T item)
+        public static async Task<Document> CreateMessageAsync(T message)
         {
             return await client.CreateDocumentAsync(
-                UriFactory.CreateDocumentCollectionUri(DatabaseId, CollectionId), item);
+                UriFactory.CreateDocumentCollectionUri(DatabaseId, CollectionId), message);
         }
 
-        public static async Task<Document> UpdateItemAsync(string id, T item)
+        public static async Task<Document> UpdateMessageAsync(string id, T message)
         {
             return await client.ReplaceDocumentAsync(
-                UriFactory.CreateDocumentUri(DatabaseId, CollectionId, id), item);
+                UriFactory.CreateDocumentUri(DatabaseId, CollectionId, id), message);
         }
 
-        public static async Task DeleteItemAsync(string id)
+        public static async Task DeleteMessageAsync(string id)
         {
             await client.DeleteDocumentAsync(
                 UriFactory.CreateDocumentUri(DatabaseId, CollectionId, id));

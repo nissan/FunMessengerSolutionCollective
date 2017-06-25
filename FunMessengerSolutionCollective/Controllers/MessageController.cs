@@ -25,9 +25,31 @@ namespace FunMessengerSolutionCollective.Controllers
 
         public async Task<IEnumerable<Message>> GetMessageHistoryAsync()
         {
-            var messageHistory = await MessageRepository<Message>.GetMessagesAsync(d=>!d.Deleted);
-            return messageHistory;
+            var messageHistory = await MessageRepository<Message>.GetMessagesAsync(d => !d.Deleted);
+            return messageHistory.OrderByDescending(c => c.DateTimeStamp);
         }
+      
+        public async Task<IHttpActionResult> PostMessage(string senderName, string senderImageUrl, string title, string body, string threadId)
+        {
 
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            var message = new Message
+            {
+                Id = Guid.NewGuid().ToString(),
+                ThreadId = threadId.Equals(String.Empty) ? Guid.NewGuid().ToString() : threadId,
+                SenderName = senderName,
+                SenderImageUrl = senderImageUrl,
+                Title = title,
+                Body = body,
+                DateTimeStamp = DateTime.Now.ToString()
+            };
+
+            await MessageRepository<Message>.CreateMessageAsync(message);
+            return Ok(message);
+
+
+
+        }
     }
 }
